@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Survivors</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Title Menu -->
+        <div id="title-menu" class="menu-screen">
+            <h1 class="neon-title">NEON SURVIVORS</h1>
+            <p class="subtitle">ローグライク・カジュアルシューター</p>
+            <button id="start-button" class="neon-button">START GAME</button>
+            <div class="controls-info">
+                <p>WASD / 矢印キー: 移動</p>
+                <p>自動攻撃: 停止時に最も近い敵を攻撃</p>
+                <p>1, 2, 3: スキル選択</p>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Boss HP Bar -->
+        <div id="boss-hp-container" class="hidden">
+            <div id="boss-name">BOSS</div>
+            <div id="boss-hp-bar">
+                <div id="boss-hp-fill"></div>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud" class="hidden">
+            <div id="status-bar">
+                <div id="hp-container">
+                    <span class="label">HP</span>
+                    <div id="hp-bar">
+                        <div id="hp-fill"></div>
+                    </div>
+                </div>
+                <div id="level-display">LV.<span id="level-value">1</span></div>
+                <div id="timer-display">⏱<span id="timer-value">00:00</span></div>
+                <div id="kill-display">💀<span id="kill-value">0</span></div>
+            </div>
+            <div id="bottom-bar">
+                <div id="shop-container">
+                    <div id="gold-display">🪙<span id="gold-value">0</span></div>
+                    <button id="shop-button">SHOP [B]</button>
+                </div>
+                <div id="skill-slots"></div>
+                <div id="ultimate-container">
+                    <div id="ultimate-bar">
+                        <div id="ultimate-fill"></div>
+                    </div>
+                    <span id="ultimate-label">SPACE</span>
+                    <span id="ultimate-ready" class="hidden">READY!</span>
+                </div>
+                <div id="exp-container">
+                    <span class="label">EXP</span>
+                    <div id="exp-bar">
+                        <div id="exp-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="modal hidden">
+            <h2 class="neon-text">SHOP</h2>
+            <p id="shop-gold">🪙 <span id="shop-gold-value">0</span></p>
+            <div id="shop-items"></div>
+            <button id="shop-close" class="neon-button">閉じる</button>
+        </div>
+
+        <!-- Skill Selection Modal -->
+        <div id="skill-select" class="modal hidden">
+            <h2 class="neon-text">LEVEL UP!</h2>
+            <div id="skill-options"></div>
+        </div>
+
+        <!-- Skill Slot Selection Modal -->
+        <div id="slot-select" class="modal hidden">
+            <h2 class="neon-text">スキル解放!</h2>
+            <p class="slot-subtitle">解放するスキルスロットを選択</p>
+            <div id="slot-options"></div>
+        </div>
+
+        <!-- Active Skill Selection Modal -->
+        <div id="active-skill-select" class="modal hidden">
+            <h2 class="neon-text"><span id="active-skill-key">Q</span>スキル選択</h2>
+            <div id="active-skill-options"></div>
+        </div>
+
+        <!-- Legendary Skill Selection Modal (Boss Reward) -->
+        <div id="legendary-select" class="modal hidden">
+            <h2 class="legendary-title">LEGENDARY!</h2>
+            <p class="legendary-subtitle">ボスを倒した報酬</p>
+            <div id="legendary-options"></div>
+        </div>
+
+        <!-- Pause Menu -->
+        <div id="pause-menu" class="modal hidden">
+            <h2 class="neon-text">PAUSED</h2>
+            <button id="resume-button" class="neon-button">RESUME</button>
+            <button id="quit-button" class="neon-button">QUIT</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over" class="menu-screen hidden">
+            <h1 class="neon-title game-over-title">GAME OVER</h1>
+            <div id="final-stats">
+                <p>レベル: <span id="final-level">1</span></p>
+                <p>生存時間: <span id="final-time">00:00</span></p>
+                <p>撃破数: <span id="final-kills">0</span></p>
+            </div>
+            <button id="restart-button" class="neon-button">RESTART</button>
+        </div>
+
+        <!-- Wave Notification -->
+        <div id="wave-notification" class="hidden">
+            <span id="wave-text">WAVE 1</span>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

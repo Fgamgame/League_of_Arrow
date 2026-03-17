@@ -1,0 +1,230 @@
+/* Effects CSS - Animations and visual effects */
+
+/* Damage flash on player */
+.damage-flash {
+    animation: damage-flash 0.2s ease-out;
+}
+
+@keyframes damage-flash {
+    0%, 100% { filter: none; }
+    50% { filter: brightness(2) saturate(0); }
+}
+
+/* Screen shake */
+.screen-shake {
+    animation: screen-shake 0.3s ease-out;
+}
+
+@keyframes screen-shake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(5px, 5px); }
+    30% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, -5px); }
+    50% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    70% { transform: translate(-2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    90% { transform: translate(-1px, -1px); }
+}
+
+/* Level up glow effect */
+.level-up-glow {
+    animation: level-up-glow 1s ease-out;
+}
+
+@keyframes level-up-glow {
+    0% {
+        box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 50px rgba(255, 255, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 60px var(--neon-yellow), inset 0 0 100px rgba(255, 255, 0, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 50px rgba(0, 255, 255, 0.05);
+    }
+}
+
+/* Pickup item float */
+.pickup-float {
+    animation: pickup-float 1s ease-in-out infinite;
+}
+
+@keyframes pickup-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Enemy spawn effect */
+.spawn-effect {
+    animation: spawn-effect 0.5s ease-out;
+}
+
+@keyframes spawn-effect {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Boss warning */
+.boss-warning {
+    animation: boss-warning 0.5s ease-in-out 3;
+}
+
+@keyframes boss-warning {
+    0%, 100% {
+        background: transparent;
+    }
+    50% {
+        background: rgba(255, 0, 0, 0.2);
+    }
+}
+
+/* Skill acquired */
+.skill-acquired {
+    animation: skill-acquired 0.5s ease-out;
+}
+
+@keyframes skill-acquired {
+    0% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Critical hit */
+.critical-hit {
+    animation: critical-hit 0.3s ease-out;
+}
+
+@keyframes critical-hit {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.5);
+        filter: brightness(2);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+/* Floating damage numbers */
+.damage-number {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    color: var(--neon-red);
+    text-shadow: 0 0 5px var(--neon-red);
+    pointer-events: none;
+    animation: damage-number 1s ease-out forwards;
+}
+
+.damage-number.critical {
+    font-size: 1.8rem;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 10px var(--neon-yellow);
+}
+
+.damage-number.heal {
+    color: var(--neon-green);
+    text-shadow: 0 0 5px var(--neon-green);
+}
+
+@keyframes damage-number {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.5);
+    }
+}
+
+/* EXP orb glow */
+.exp-glow {
+    animation: exp-glow 0.5s ease-in-out infinite;
+}
+
+@keyframes exp-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--exp-color);
+    }
+    50% {
+        box-shadow: 0 0 15px var(--exp-color);
+    }
+}
+
+/* Button press effect */
+.button-press {
+    animation: button-press 0.1s ease-out;
+}
+
+@keyframes button-press {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+/* Fade in */
+.fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Fade out */
+.fade-out {
+    animation: fade-out 0.3s ease-out forwards;
+}
+
+@keyframes fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Slide in from top */
+.slide-in-top {
+    animation: slide-in-top 0.3s ease-out;
+}
+
+@keyframes slide-in-top {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Pulse */
+.pulse {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}

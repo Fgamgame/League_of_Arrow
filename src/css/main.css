@@ -1,0 +1,125 @@
+/* Main CSS - Base styles and reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --neon-cyan: #00ffff;
+    --neon-pink: #ff00ff;
+    --neon-green: #00ff00;
+    --neon-yellow: #ffff00;
+    --neon-orange: #ff8800;
+    --neon-red: #ff0044;
+    --neon-blue: #0088ff;
+    --neon-purple: #8800ff;
+
+    --bg-dark: #0a0a0f;
+    --bg-darker: #050508;
+    --bg-panel: rgba(10, 10, 20, 0.9);
+
+    --text-primary: #ffffff;
+    --text-secondary: #aaaacc;
+
+    --hp-color: #00ff44;
+    --hp-low: #ff4400;
+    --exp-color: #ffff00;
+
+    --font-main: 'Segoe UI', 'Arial', sans-serif;
+    --font-mono: 'Consolas', 'Monaco', monospace;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-main);
+    background: var(--bg-darker);
+    color: var(--text-primary);
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(ellipse at center, var(--bg-dark) 0%, var(--bg-darker) 100%);
+}
+
+#game-canvas {
+    display: block;
+    background: var(--bg-dark);
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 50px rgba(0, 255, 255, 0.05);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.neon-title {
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-cyan),
+        0 0 40px var(--neon-cyan),
+        0 0 80px var(--neon-cyan);
+    animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.neon-text {
+    color: var(--neon-cyan);
+    text-shadow:
+        0 0 5px var(--neon-cyan),
+        0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-cyan);
+}
+
+.neon-button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--neon-cyan);
+    background: transparent;
+    border: 2px solid var(--neon-cyan);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.neon-button:hover {
+    background: var(--neon-cyan);
+    color: var(--bg-dark);
+    box-shadow: 0 0 30px var(--neon-cyan), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.neon-button:active {
+    transform: scale(0.95);
+}
+
+@keyframes neon-pulse {
+    0%, 100% {
+        text-shadow:
+            0 0 10px var(--neon-cyan),
+            0 0 20px var(--neon-cyan),
+            0 0 40px var(--neon-cyan),
+            0 0 80px var(--neon-cyan);
+    }
+    50% {
+        text-shadow:
+            0 0 5px var(--neon-cyan),
+            0 0 10px var(--neon-cyan),
+            0 0 20px var(--neon-cyan),
+            0 0 40px var(--neon-cyan);
+    }
+}
