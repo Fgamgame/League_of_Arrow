@@ -891,17 +891,17 @@ export class Game {
 
         switch (skillId) {
             case 'skill_empower':
-                // Empower: damage x2, piercing, multi-shot
+                // Empower: damage x1.5, multi-shot (no piercing)
                 this.empowerBuff = {
                     active: true,
-                    duration: 5 + stacks,
-                    timer: 5 + stacks,
-                    damageMultiplier: 2 + stacks * 0.5,
-                    piercing: true,
+                    duration: 4 + stacks,
+                    timer: 4 + stacks,
+                    damageMultiplier: 1.5 + stacks * 0.3,
+                    piercing: false,
                     multiShot: true
                 };
                 this.effects.flash('#ffaa00', 0.3);
-                this.player.skillCooldowns.Q = Math.max(3, 12 - stacks * 2);
+                this.player.skillCooldowns.Q = Math.max(5, 15 - stacks * 2);
                 break;
 
             case 'skill_berserk':

@@ -82,10 +82,10 @@ export class WeaponSystem {
         // Check collisions with enemies
         this.checkWeaponCollisions();
 
-        // Lightning timer (3 second cooldown)
+        // Lightning timer (4 second cooldown, -0.3s per level, min 2s)
         if (this.lightningRing > 0) {
             this.lightningTimer += deltaTime;
-            const cooldown = Math.max(1.5, 3 - this.lightningRing * 0.3);
+            const cooldown = Math.max(2, 4 - this.lightningRing * 0.3);
             if (this.lightningTimer >= cooldown) {
                 this.lightningTimer = 0;
                 this.triggerLightning();
@@ -93,8 +93,8 @@ export class WeaponSystem {
 
             // Update lightning animation
             if (this.lightningActive) {
-                this.lightningRadius += deltaTime * 800;
-                const maxRadius = 250 + this.lightningRing * 50;
+                this.lightningRadius += deltaTime * 600;
+                const maxRadius = 200 + this.lightningRing * 30;
                 if (this.lightningRadius >= maxRadius) {
                     this.lightningActive = false;
                     this.lightningRadius = 0;
@@ -103,36 +103,37 @@ export class WeaponSystem {
             }
         }
 
-        // Poison timer
+        // Poison timer (1 second tick)
         if (this.poisonCloud > 0) {
             this.poisonTimer += deltaTime;
-            if (this.poisonTimer >= 0.5) {
+            if (this.poisonTimer >= 1.0) {
                 this.poisonTimer = 0;
                 this.triggerPoison();
             }
         }
 
-        // Shockwave timer (5 second cooldown)
+        // Shockwave timer (8 second cooldown, -0.5s per level, min 5s)
         if (this.shockwave > 0) {
             this.shockwaveTimer += deltaTime;
-            if (this.shockwaveTimer >= 5) {
+            const cooldown = Math.max(5, 8 - this.shockwave * 0.5);
+            if (this.shockwaveTimer >= cooldown) {
                 this.shockwaveTimer = 0;
                 this.triggerShockwave();
             }
 
             // Update shockwave animation
             if (this.shockwaveActive) {
-                this.shockwaveRadius += deltaTime * 600;
-                if (this.shockwaveRadius >= 300 + this.shockwave * 50) {
+                this.shockwaveRadius += deltaTime * 400;
+                if (this.shockwaveRadius >= 200 + this.shockwave * 30) {
                     this.shockwaveActive = false;
                     this.shockwaveRadius = 0;
                 }
             }
         }
 
-        // Aura Blade - wide area auto attack (1.5 second cooldown, faster with stacks)
+        // Aura Blade (3 second cooldown, -0.2s per level, min 1.5s)
         if (this.auraBlade > 0) {
-            const cooldown = Math.max(0.5, 1.5 - this.auraBlade * 0.2);
+            const cooldown = Math.max(1.5, 3 - this.auraBlade * 0.2);
             this.auraBladeTimer += deltaTime;
             if (this.auraBladeTimer >= cooldown) {
                 this.auraBladeTimer = 0;
@@ -141,8 +142,8 @@ export class WeaponSystem {
 
             // Update aura blade animation
             if (this.auraBladeActive) {
-                this.auraBladeRadius += deltaTime * 800;
-                const maxRadius = 350 + this.auraBlade * 50;
+                this.auraBladeRadius += deltaTime * 500;
+                const maxRadius = 200 + this.auraBlade * 30;
                 if (this.auraBladeRadius >= maxRadius) {
                     this.auraBladeActive = false;
                     this.auraBladeRadius = 0;
@@ -156,10 +157,11 @@ export class WeaponSystem {
         const enemies = this.game.enemies;
         const baseDamage = player.damage;
 
-        // Shield collision
+        // Shield collision (damage: 0.5x + 0.2x per level)
         if (this.orbitingShields > 0) {
             const shieldRadius = 120 + this.orbitingShields * 30;
             const shieldSize = 20;
+            const shieldDamage = baseDamage * (0.5 + this.orbitingShields * 0.2);
 
             for (let i = 0; i < this.orbitingShields; i++) {
                 const angle = this.shieldAngle + (Math.PI * 2 * i / Math.max(1, this.orbitingShields));
@@ -171,18 +173,19 @@ export class WeaponSystem {
                     const dx = enemy.x - sx;
                     const dy = enemy.y - sy;
                     if (dx * dx + dy * dy < (shieldSize + enemy.radius) ** 2) {
-                        enemy.takeDamage(baseDamage * 2 * this.orbitingShields);
-                        enemy.weaponHitCooldown = 0.3;
+                        enemy.takeDamage(shieldDamage);
+                        enemy.weaponHitCooldown = 0.5;
                         if (enemy.hp <= 0) this.game.onEnemyKilled(enemy);
                     }
                 }
             }
         }
 
-        // Fire orb collision
+        // Fire orb collision (damage: 0.3x + 0.15x per level)
         if (this.fireOrbs > 0) {
             const orbRadius = 150 + this.fireOrbs * 40;
             const orbSize = 15;
+            const orbDamage = baseDamage * (0.3 + this.fireOrbs * 0.15);
 
             for (let i = 0; i < this.fireOrbs * 2; i++) {
                 const angle = this.orbAngle + (Math.PI * 2 * i / (this.fireOrbs * 2));
@@ -194,18 +197,19 @@ export class WeaponSystem {
                     const dx = enemy.x - ox;
                     const dy = enemy.y - oy;
                     if (dx * dx + dy * dy < (orbSize + enemy.radius) ** 2) {
-                        enemy.takeDamage(baseDamage * 1.5 * this.fireOrbs);
-                        enemy.weaponHitCooldown = 0.25;
+                        enemy.takeDamage(orbDamage);
+                        enemy.weaponHitCooldown = 0.4;
                         if (enemy.hp <= 0) this.game.onEnemyKilled(enemy);
                     }
                 }
             }
         }
 
-        // Boomerang collision
+        // Boomerang collision (damage: 0.6x + 0.3x per level)
         if (this.boomerang > 0) {
             const boomRadius = 180 + this.boomerang * 50;
             const boomSize = 18;
+            const boomDamage = baseDamage * (0.6 + this.boomerang * 0.3);
 
             for (let i = 0; i < this.boomerang; i++) {
                 const angle = this.boomerangAngle + (Math.PI * 2 * i / this.boomerang);
@@ -217,8 +221,8 @@ export class WeaponSystem {
                     const dx = enemy.x - bx;
                     const dy = enemy.y - by;
                     if (dx * dx + dy * dy < (boomSize + enemy.radius) ** 2) {
-                        enemy.takeDamage(baseDamage * 3 * this.boomerang);
-                        enemy.weaponHitCooldown = 0.3;
+                        enemy.takeDamage(boomDamage);
+                        enemy.weaponHitCooldown = 0.5;
                         if (enemy.hp <= 0) this.game.onEnemyKilled(enemy);
                     }
                 }
@@ -229,8 +233,8 @@ export class WeaponSystem {
     triggerLightning() {
         const player = this.game.player;
         const enemies = this.game.enemies;
-        const range = 250 + this.lightningRing * 50;
-        const damage = player.damage * (2 + this.lightningRing * 1.0);
+        const range = 200 + this.lightningRing * 30;
+        const damage = player.damage * (0.8 + this.lightningRing * 0.3);
 
         // Start animation
         this.lightningActive = true;
@@ -261,8 +265,8 @@ export class WeaponSystem {
     triggerPoison() {
         const player = this.game.player;
         const enemies = this.game.enemies;
-        const range = 150 + this.poisonCloud * 50;
-        const damage = player.damage * 0.4 * this.poisonCloud;
+        const range = 100 + this.poisonCloud * 25;
+        const damage = player.damage * (0.1 + this.poisonCloud * 0.08);
 
         for (const enemy of enemies) {
             if (!enemy.active) continue;
@@ -278,8 +282,8 @@ export class WeaponSystem {
     triggerShockwave() {
         const player = this.game.player;
         const enemies = this.game.enemies;
-        const range = 300 + this.shockwave * 50;
-        const damage = player.damage * 2 * this.shockwave;
+        const range = 200 + this.shockwave * 30;
+        const damage = player.damage * (0.8 + this.shockwave * 0.4);
 
         this.shockwaveActive = true;
         this.shockwaveRadius = 0;
@@ -298,8 +302,8 @@ export class WeaponSystem {
     triggerAuraBlade() {
         const player = this.game.player;
         const enemies = this.game.enemies;
-        const range = 350 + this.auraBlade * 50;
-        const damage = player.damage * (1.5 + this.auraBlade * 0.5);
+        const range = 200 + this.auraBlade * 30;
+        const damage = player.damage * (0.5 + this.auraBlade * 0.2);
 
         this.auraBladeActive = true;
         this.auraBladeRadius = 0;
@@ -331,23 +335,23 @@ export class WeaponSystem {
             orbAngle: this.orbAngle,
             orbRadius: 150 + this.fireOrbs * 40,
             lightning: this.lightningRing,
-            lightningRadius: 250 + this.lightningRing * 50,
+            lightningRadius: 200 + this.lightningRing * 30,
             lightningActive: this.lightningActive,
             lightningAnimRadius: this.lightningRadius,
             lightningStrikes: this.lightningStrikes,
             poison: this.poisonCloud,
-            poisonRadius: 150 + this.poisonCloud * 50,
+            poisonRadius: 100 + this.poisonCloud * 25,
             boomerang: this.boomerang,
             boomerangAngle: this.boomerangAngle,
             boomerangRadius: 180 + this.boomerang * 50,
             shockwave: this.shockwave,
             shockwaveActive: this.shockwaveActive,
             shockwaveRadius: this.shockwaveRadius,
-            shockwaveMaxRadius: 300 + this.shockwave * 50,
+            shockwaveMaxRadius: 200 + this.shockwave * 30,
             auraBlade: this.auraBlade,
             auraBladeActive: this.auraBladeActive,
             auraBladeRadius: this.auraBladeRadius,
-            auraBladeMaxRadius: 350 + this.auraBlade * 50
+            auraBladeMaxRadius: 200 + this.auraBlade * 30
         };
     }
 }

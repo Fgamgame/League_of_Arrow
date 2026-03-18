@@ -227,13 +227,13 @@ export class HUD {
 
     getSkillBasePrice(skill) {
         const prices = {
-            attack: 30,
-            defense: 25,
-            movement: 20,
-            special: 40,
-            weapon: 50
+            attack: 80,
+            defense: 60,
+            movement: 50,
+            special: 100,
+            weapon: 150
         };
-        return prices[skill.category] || 30;
+        return prices[skill.category] || 80;
     }
 
     updateSkills(acquiredSkills) {

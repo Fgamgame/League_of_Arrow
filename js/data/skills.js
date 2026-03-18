@@ -501,8 +501,8 @@ export const ActiveSkills = {
             name: 'エンパワー',
             icon: SkillIcons.skill_empower,
             category: 'active',
-            effect: '5秒間攻撃力2倍＆貫通付与',
-            description: '通常攻撃を大幅強化',
+            effect: '4秒間攻撃力1.5倍＆拡散弾',
+            description: '通常攻撃を強化',
             activeKey: 'Q',
             stackable: true,
             maxStacks: 3
